@@ -4,6 +4,7 @@ from view import UIManager
 class SigmaNet:
 
     def __init__(self):
+
         self.FbChatManager= FbChatManager.FbChatManager()
         self.ViewManager= UIManager.UIManager()
 
@@ -20,3 +21,4 @@ class SigmaNet:
         for client in self.FbChatManager.activeFbClients:
             print("name: "+ client)
             print("behaviour: "+ self.FbChatManager.activeFbClients[client][1])
+

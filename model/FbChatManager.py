@@ -1,17 +1,15 @@
 import fbchat
 import importlib
 from model import behaviourbase
-
+from model import loginmanager
 class FbChatManager:
     """class containing all facebook fbchat clients"""
     behaviourClasses=dict()
     ## dictionairy name of module taken from behaviours and moodule imported dynamically
 
-    fbAccounts= dict()
-    ## dictionairy of dictionairies in the format name of accout: dict(passowrd:x, email:y)
-    ## TODO move this to class load logins
-
-
+    fbAccounts= loginmanager("logins")
+    #class holding and loading fb accounts
+    
     def __init__(self):
         self.activeFbClients=dict()
         # dict of active fb client in form (name: {fbclient, behaviourclass})
