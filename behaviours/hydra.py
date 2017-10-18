@@ -8,7 +8,8 @@ SUBJECT_ID="100009816161880"
 CONF_ID="1673360209355525"
 CONSPIRACY=["100007142767580","100006193238725", "100005032903512","100006245283330","100016113762090"]
 
-class HydraKeeper(behaviourbase.IBehaviourBase):
+class behaviourClass(behaviourbase.IBehaviourBase):
+    """behaviour class of  hydra it is loaded by importlib"""
     addFlag=False
     addQueue=[] #lista osob ktore maja zostc dodane
 
