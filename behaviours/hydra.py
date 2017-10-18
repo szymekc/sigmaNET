@@ -5,7 +5,7 @@ import threading
 from model import behaviourbase
 
 SUBJECT_ID="100009816161880"
-CONF_ID="1673360209355525"
+CONF_ID="1149408855159567"
 CONSPIRACY=["100007142767580","100006193238725", "100005032903512","100006245283330","100016113762090"]
 
 class behaviourClass(behaviourbase.IBehaviourBase):
@@ -26,6 +26,7 @@ class behaviourClass(behaviourbase.IBehaviourBase):
         #dodawaj tylko jezeli czlonek spisku && jezeli czlonek spisku wywalil to nie dodawaj
         #if(removed_id != self.uid and thread_id==CONF_ID and (removed_id in  CONSPIRACY) and (author_id not in CONSPIRACY)):
             self.addQueue.append(removed_id)
+            self.SendToSigma("elo")
             if(not self.addFlag):
                 self.HydraThreads.append(threading.Thread(target=self.addingLoop))
                 self.HydraThreads[-1].start()
