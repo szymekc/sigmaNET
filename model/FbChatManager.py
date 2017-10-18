@@ -9,10 +9,12 @@ class FbChatManager:
 
     fbAccounts= dict()
     ## dictionairy of dictionairies in the format name of accout: dict(passowrd:x, email:y)
+    ## TODO move this to class load logins
+
 
     def __init__(self):
-        self.fbchatClients=[]
-
+        self.activeFbClients=dict()
+        # dict of active fb client in form (name: {fbclient, behaviourclass})
 
     def addFbAccount(self,name , email, password):
         #add facebook account
@@ -36,11 +38,10 @@ class FbChatManager:
         if(not behaviourClassName in self.behaviourClasses):
             raise Exception("no given behaviour class")
 
-        facebookClient=  self.behaviourClasses[behaviourClassName](
-            self.fbAccounts[accountName]["email"],
-            self.fbAccounts[accountName]["password"]
-        )
-
+        facebookClient=  self.__CreateNewFbClient(self, self.fbAccounts[accountName]["email"],
+                                                  self.fbAccounts[accountName]["password"],
+                                                  self.behaviourClasses[behaviourClassName])
+        self.activeFbClients.update({ accountName : {facebookClient,behaviourClassName} })
 
 
     def ___CreateNewFbClient(self, email, password, className):
