@@ -6,3 +6,5 @@ class IBehaviourBase(Client):
     def __init__(self, email, password):
         Client.__init__(self, email=email, password=password)
 
+    def start(self):
+        print("behaviour base abstract method invoked error")

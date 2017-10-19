@@ -4,13 +4,12 @@ from view import UIManager
 class SigmaNet:
 
     def __init__(self):
-
         self.FbChatManager= FbChatManager.FbChatManager()
         self.ViewManager= UIManager.UIManager()
 
     def Login(self,name,email,password):
         #login single account
-        self.FbChatManager.addFbAccount(name, email, password)
+        self.FbChatManager.fbAccounts.load()
 
     def Accounts(self):
         """list every account login info"""
