@@ -35,19 +35,17 @@ class FbChatManager:
         if(not behaviourClassName in self.behaviourClasses):
             raise Exception("no given behaviour class")
 
-
+        # bind account name with behaviour module engaged with it
         self.activeFbClients.update({ accountName : behaviourClassName })
 
+        # start thread by initializing __init__ of give class and put it into the thread list
         self.activeBehaviourThreads.append(
             threading.Thread(target=self.behaviourClasses[behaviourClassName],
                              kwargs={#"self": self.behaviourClasses[behaviourClassName],
                                      "email": self.fbAccounts.fbLogins[accountName]["email"],
                                      "password": self.fbAccounts.fbLogins[accountName]["password"]}))
+
+        #start this thread [-1] in python gives last element
         self.activeBehaviourThreads[-1].start()
 
-
-
-    def __CreateNewFbClient(self, email, password, behaviourClass):
-        #append clients by initializing behaviour class given by className keyed from modules dict
-        return (behaviourClass(email, password))
 
