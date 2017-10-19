@@ -19,6 +19,10 @@ class SigmaNet:
     def DispAccounts(self):
         """list every account login info"""
         print(self.FbChatManager.fbAccounts)
+        for account in self.FbChatManager.fbAccounts.fbLogins:
+            print("name: " + account)
+            for accountDetalis in self.FbChatManager.fbAccounts.fbLogins[account]:
+                print(accountDetalis, ':', self.FbChatManager.fbAccounts.fbLogins[account][accountDetalis])
 
     def DispActiveAccounts(self):
         """list every fb account that sigma is logged in"""
@@ -30,3 +34,4 @@ class SigmaNet:
     def Run(self, fbName, ModuleName):
         self.FbChatManager.importBehaviour(ModuleName)
         self.FbChatManager.engageBehaviour(ModuleName, fbName)
+
