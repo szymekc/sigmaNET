@@ -5,6 +5,7 @@ class IBehaviourBase(Client):
      it handles logging in and tasks on behaviour loader side"""
     def __init__(self, email, password):
         Client.__init__(self, email=email, password=password)
+        self.Run()
 
-    def start(self):
+    def Run(self):
         print("behaviour base abstract method invoked error")

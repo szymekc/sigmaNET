@@ -43,4 +43,6 @@ class behaviourClass(behaviourbase.IBehaviourBase):
         for person in self.addQueue:
             Client.addUsersToGroup(self, person, CONF_ID)
 
-
+    def Run(self):
+        while(True):
+            self.SendToSigma("test123")

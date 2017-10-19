@@ -2,16 +2,19 @@ import fbchat
 import importlib
 from model import behaviourbase
 from model import loginmanager
+import threading
+
 class FbChatManager:
     """class containing all facebook fbchat clients"""
     behaviourClasses=dict()
     ## dictionairy name of module taken from behaviours and moodule imported dynamically
 
-    fbAccounts= loginmanager.LoginManager("tests/login.txt")
+    fbAccounts= loginmanager.LoginManager()
     #class holding and loading fb accounts
-    
+
     def __init__(self):
         self.activeFbClients=dict()
+        self.activeBehaviourThreads=[]
         # dict of active fb client in form (name: {fbclient, behaviourclass})
 
     def importBehaviour(self, className):
@@ -32,14 +35,18 @@ class FbChatManager:
         if(not behaviourClassName in self.behaviourClasses):
             raise Exception("no given behaviour class")
 
-        facebookClient=  self.__CreateNewFbClient(self, self.fbAccounts.fbLogins[accountName]["email"],
-                                                  self.fbAccounts.fbLogins[accountName]["password"],
-                                                  self.behaviourClasses[behaviourClassName])
-        self.activeFbClients.update({ accountName : {facebookClient,behaviourClassName} })
+
+        self.activeFbClients.update({ accountName : behaviourClassName })
+
+        self.activeBehaviourThreads.append(threading.Thread(target=
+                                                            self.activeFbClients[accountName].__init__,
+                                                            kwargs={"email": self.fbAccounts.fbLogins[accountName]["email"],
+                                                                "password":self.fbAccounts.fbLogins[accountName]["password"]}))
+        self.activeBehaviourThreads[len(self.activeBehaviourThreads)-1].start()
 
 
-    def ___CreateNewFbClient(self, email, password, className):
+
+    def __CreateNewFbClient(self, email, password, behaviourClass):
         #append clients by initializing behaviour class given by className keyed from modules dict
-        self.fbchatClients.append(
-            self.behaviourClasses[className](email, password))
+        return (behaviourClass(email, password))
 
