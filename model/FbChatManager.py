@@ -38,11 +38,12 @@ class FbChatManager:
 
         self.activeFbClients.update({ accountName : behaviourClassName })
 
-        self.activeBehaviourThreads.append(threading.Thread(target=
-                                                            self.activeFbClients[accountName].__init__,
-                                                            kwargs={"email": self.fbAccounts.fbLogins[accountName]["email"],
-                                                                "password":self.fbAccounts.fbLogins[accountName]["password"]}))
-        self.activeBehaviourThreads[len(self.activeBehaviourThreads)-1].start()
+        self.activeBehaviourThreads.append(
+            threading.Thread(target=self.behaviourClasses[behaviourClassName],
+                             kwargs={#"self": self.behaviourClasses[behaviourClassName],
+                                     "email": self.fbAccounts.fbLogins[accountName]["email"],
+                                     "password": self.fbAccounts.fbLogins[accountName]["password"]}))
+        self.activeBehaviourThreads[-1].start()
 
 
 
